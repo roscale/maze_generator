@@ -3,7 +3,7 @@ project(maze_generator)
 
 set(CMAKE_CXX_STANDARD 14)
 
-set(SOURCE_FILES main.cpp Cell.cpp Cell.hpp MazeGenerator.cpp MazeGenerator.hpp)
+set(SOURCE_FILES main.cpp Cell.cpp Cell.hpp MazeGenerator.cpp MazeGenerator.hpp AStar.cpp AStar.hpp Node.cpp Node.hpp)
 add_executable(maze_generator ${SOURCE_FILES})
 
 include(FindPkgConfig)
