@@ -14,15 +14,19 @@
 
 class MazeGenerator {
 public:
-	MazeGenerator(int w, int h, int xStart, int yStart);
+	MazeGenerator(int w, int h);
+	MazeGenerator(std::string filename);
 
-	void generate();
+	void reset(int w, int h);
+	void importFromFile(std::string filename);
+	void exportToFile(std::string filename);
+	void generate(int xStart, int yStart);
 	void draw(SDL2pp::Renderer &renderer, int size);
 
 	friend std::ostream& operator<< (std::ostream &out, MazeGenerator &m);
 
 private:
-	std::vector<std::vector<Cell>> maze;
+	std::vector<std::vector<Cell>> maze = {};
 	int width;
 	int height;
 

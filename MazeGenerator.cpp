@@ -3,14 +3,23 @@
 //
 
 #include <cstdlib>
+#include <fstream>
 #include "MazeGenerator.hpp"
 
-MazeGenerator::MazeGenerator(int w, int h, int xStart, int yStart) : width{w}, height{h}
-{
-	assert(xStart >= 0 && xStart < width);
-	assert(yStart >= 0 && yStart < height);
+MazeGenerator::MazeGenerator(int w, int h) {
+	reset(w, h);
+}
+
+MazeGenerator::MazeGenerator(std::string filename) {
+	importFromFile(filename);
+}
+
+void MazeGenerator::reset(int w, int h) {
+	width = w;
+	height = h;
 
 	// Create cells each one having its position as member
+	maze.clear();
 	for (int i = 0; i < width; ++i) {
 		std::vector<Cell> column;
 		for (int j = 0; j < height; ++j)
@@ -18,12 +27,62 @@ MazeGenerator::MazeGenerator(int w, int h, int xStart, int yStart) : width{w}, h
 
 		maze.push_back(column);
 	}
+}
+
+void MazeGenerator::importFromFile(std::string filename) {
+	std::ifstream in(filename);
+	assert(in && "File could not be opened");
+
+	in >> width;
+	in >> height;
+	// std::clog << width;
+
+	// Create cells and modify the walls
+	maze.clear();
+	for (int i = 0; i < width; ++i) {
+		std::vector<Cell> column;
+		for (int j = 0; j < height; ++j) {
+			column.emplace_back(i, j);
+
+			// Set the walls
+			std::string strWalls;
+			in >> strWalls;
+			column.back().setWalls(strWalls);
+		}
+		maze.push_back(column);
+	}
+
+
+	// std::clog << *this;
+}
+
+void MazeGenerator::exportToFile(std::string filename)
+{
+	std::ofstream out(filename);
+	assert(out && "File could not be opened");
+
+	// Write the dimension of the matrix
+	out << width << " " << height << '\n';
+
+	// Write each cell's wall
+	for (int i = 0; i < width; ++i) {
+		for (int j = 0; j < height; ++j) {
+			for (const bool &wall : maze[i][j].walls)
+				out << wall;
+			out << ' ';
+		}
+		out << '\n';
+	}
+}
+
+void MazeGenerator::generate(int xStart, int yStart) {
+	assert(xStart >= 0 && xStart < width);
+	assert(yStart >= 0 && yStart < height);
 
 	// Set the starting cell
 	current = &(maze[xStart][yStart]);
-}
 
-void MazeGenerator::generate() {
+	// The algorithm like on wikipedia
 	current->markAsVisited();
 
 	while (unvisitedCells()) {

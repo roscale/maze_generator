@@ -18,12 +18,14 @@ public:
 		UP,
 		DOWN,
 		LEFT,
-		RIGHT
+		RIGHT,
+		MAX_WALLS
 	};
 
 	bool hasBeenVisited() const;
 	void markAsVisited();
 	void removeWall(Wall wallToRemove);
+	void setWalls(std::string strWalls);
 	void draw(SDL2pp::Renderer &renderer, int size) const;
 
 	friend std::ostream& operator<< (std::ostream &out, Cell &c);

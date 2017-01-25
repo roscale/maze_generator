@@ -12,9 +12,13 @@ int main() {
 	Window gWindow("Maze generator", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 800, SDL_WINDOW_SHOWN);
 	Renderer gRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
 
-	MazeGenerator maze{40, 40, 0, 0};
-	maze.generate();
-	std::cout << maze;
+	MazeGenerator maze{40, 40};
+	// MazeGenerator maze{"myMaze.txt"};
+	// maze.reset(20, 20);
+	maze.generate(0, 0);
+	// maze.importFromFile("myMaze.txt");
+	// maze.exportToFile("myMaze.txt");
+	std::clog << maze;
 
 
 	gRenderer.SetDrawColor(255, 255, 255);

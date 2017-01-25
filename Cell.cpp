@@ -9,6 +9,10 @@ Cell::Cell(int x, int y) {
 	this->y = y;
 }
 
+bool Cell::hasBeenVisited() const {
+	return visited;
+}
+
 void Cell::markAsVisited() {
 	visited = true;
 }
@@ -17,8 +21,11 @@ void Cell::removeWall(Cell::Wall wallToRemove) {
 	walls[wallToRemove] = false;
 }
 
-bool Cell::hasBeenVisited() const {
-	return visited;
+void Cell::setWalls(std::string strWalls) {
+	for (int w = 0; w < MAX_WALLS; ++w) {
+		walls[w] = strWalls[w] - '0';
+		// std::clog << walls[w];
+	}
 }
 
 void Cell::draw(SDL2pp::Renderer &renderer, int size) const{
@@ -34,6 +41,11 @@ void Cell::draw(SDL2pp::Renderer &renderer, int size) const{
 }
 
 std::ostream& operator<<(std::ostream &out, Cell &c) {
-	out << "(" << c.x << ", " << c.y << ")";
+	std::string strWalls;
+	for (int w = 0; w < c.MAX_WALLS; ++w) {
+		strWalls += (c.walls[w] + '0');
+	}
+	out << strWalls;
 	return out;
 }
+
