@@ -1,9 +1,9 @@
-cmake_minimum_required(VERSION 3.7)
+cmake_minimum_required(VERSION 2.8)
 project(maze_generator)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES main.cpp Cell.cpp Cell.hpp MazeGenerator.cpp MazeGenerator.hpp)
+set(SOURCE_FILES main.cpp Cell.cpp Cell.hpp Maze.cpp Maze.hpp AStar.cpp AStar.hpp Node.cpp Node.hpp)
 add_executable(maze_generator ${SOURCE_FILES})
 
 include(FindPkgConfig)

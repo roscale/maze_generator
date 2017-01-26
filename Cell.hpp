@@ -8,8 +8,9 @@
 
 #include <array>
 #include <SDL2pp/Renderer.hh>
+#include "Node.hpp"
 
-class Cell {
+class Cell : public Node {
 public:
 	Cell(int x, int y);
 
@@ -28,8 +29,10 @@ public:
 	void setWalls(std::string strWalls);
 	void draw(SDL2pp::Renderer &renderer, int size) const;
 
+	friend bool operator==(const Cell &c1, const Cell &c2);
 	friend std::ostream& operator<< (std::ostream &out, Cell &c);
-	friend class MazeGenerator;
+	friend class Maze;
+	friend class AStar;
 
 private:
 	int x;

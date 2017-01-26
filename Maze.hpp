@@ -12,21 +12,22 @@
 #include <SDL2pp/Renderer.hh>
 #include "Cell.hpp"
 
-class MazeGenerator {
+class Maze {
 public:
-	MazeGenerator(int w, int h);
-	MazeGenerator(std::string filename);
+	Maze(int w, int h);
+	Maze(std::string filename);
 
 	void reset(int w, int h);
 	void importFromFile(std::string filename);
 	void exportToFile(std::string filename);
 	void generate(int xStart, int yStart);
-	void draw(SDL2pp::Renderer &renderer, int size);
+	void draw(SDL2pp::Renderer &renderer, int scale);
 
-	friend std::ostream& operator<< (std::ostream &out, MazeGenerator &m);
+	friend std::ostream& operator<< (std::ostream &out, Maze &m);
+	friend class AStar;
 
 private:
-	std::vector<std::vector<Cell>> maze = {};
+	std::vector<std::vector<Cell>> grid;
 	int width;
 	int height;
 
