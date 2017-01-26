@@ -7,16 +7,13 @@
 
 
 #include <vector>
+class Cell;
 
 class Node {
-private:
-	int x;
-	int y;
-
-	std::vector<std::reference_wrapper<Node>> openSet;
-	decltype(openSet) closedSet;
-
-	float gScore;
+protected:
+	float gScore = 0.0f;
+	float fScore = 0.0f;
+	Cell *cameFrom = nullptr;
 
 	friend class AStar;
 };

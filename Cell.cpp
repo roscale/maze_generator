@@ -49,3 +49,6 @@ std::ostream& operator<<(std::ostream &out, Cell &c) {
 	return out;
 }
 
+bool operator==(const Cell &c1, const Cell &c2) {
+	return (c1.x == c2.x && c1.y == c2.y);
+}
